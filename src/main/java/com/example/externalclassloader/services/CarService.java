@@ -31,8 +31,8 @@ public class CarService {
     private CustomClassLoader loader;
 
     public Action tuneCar(CarTuningOrder order) {
-        if(order.getClassPath() != null && !masters.containsKey(order.getAction())){
-            Class<?> beanClass = loader.findClass(order.getClassName(), order.getClassPath());
+        if(order.getJarPath() != null && !masters.containsKey(order.getAction())){
+            Class<?> beanClass = loader.findClass(order.getJarPath(), order.getClassName());
             BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) context.getBeanFactory();
             GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
             beanDefinition.setScope(BeanDefinition.SCOPE_SINGLETON);

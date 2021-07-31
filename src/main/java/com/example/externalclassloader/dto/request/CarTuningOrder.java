@@ -31,12 +31,12 @@ public class CarTuningOrder {
     @JsonProperty(value = "action", required = true)
     String action;
 
-    // A path to a compiled file " .class" which implements TuneMaster interface.
+    // A path to a jar file.
     // It cay be any directory in the file system.
-    @JsonProperty(value = "classPath", required = false)
-    String classPath;
+    @JsonProperty(value = "jarPath")
+    String jarPath;
 
     // A full class name with a package.
-    @JsonProperty(value = "className", required = false)
+    @JsonProperty(value = "className")
     String className;
 }
