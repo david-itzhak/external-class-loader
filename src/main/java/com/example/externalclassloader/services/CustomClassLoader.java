@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;
-import java.net.URLClassLoader;
+    import java.net.URLClassLoader;
 
 /**
  * @author Dmitry Itskov
@@ -14,21 +14,28 @@ import java.net.URLClassLoader;
 @Log4j2
 public class CustomClassLoader {
 
+    private MyClassLoader myClassLoader;
+
     @SneakyThrows
     public Class<?> findClass(String jarPath, String fullClassName) {
-        URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-        MyClassLoader l = new MyClassLoader(loader.getURLs());
-        l.addURL(new URL("file:" + jarPath));
-        Class<?> clazz = l.loadClass(fullClassName);
-//        Class c = Class.forName(fullClassName, true, l); // This is an alternative variant to load a class (it can replace the previous line).
+        if(myClassLoader == null){
+            myClassLoader = new MyClassLoader();
+        }
+        myClassLoader.addURL(new URL("file:" + jarPath));
+        Class<?> clazz = myClassLoader.loadClass(fullClassName);
+//        myClassLoader.close(); // this method releases resources. But it cant be used if a target class hase dependencies on other classes.
+//        Class clazz = Class.forName(fullClassName, true, myClassLoader); // This is an alternative variant to load a class (it can replace the previous line).
         log.info("Class {} is loaded", clazz.getName());
         return clazz;
     }
 }
 
 class MyClassLoader extends URLClassLoader {
-    public MyClassLoader(URL[] urls) {
-        super(urls);
+
+    private static final URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+
+    public MyClassLoader() {
+        super(loader.getURLs());
     }
 
     @Override

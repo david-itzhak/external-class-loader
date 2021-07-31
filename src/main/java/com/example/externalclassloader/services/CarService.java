@@ -23,7 +23,7 @@ public class CarService {
 
     private Map<String, CarMaster> masters = new HashMap<>();
 
-    public void register (String type, CarMaster master) {
+    public void register(String type, CarMaster master) {
         masters.put(type, master);
     }
 
@@ -31,7 +31,7 @@ public class CarService {
     private CustomClassLoader loader;
 
     public Action tuneCar(CarTuningOrder order) {
-        if(order.getJarPath() != null && !masters.containsKey(order.getAction())){
+        if (order.getJarPath() != null && !masters.containsKey(order.getAction())) {
             Class<?> beanClass = loader.findClass(order.getJarPath(), order.getClassName());
             BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) context.getBeanFactory();
             GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
