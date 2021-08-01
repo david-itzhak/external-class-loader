@@ -22,7 +22,7 @@ public class CustomClassLoader {
             myClassLoader = new MyClassLoader();
         }
         myClassLoader.addURL(new URL("file:" + jarPath));
-        Class<?> clazz = myClassLoader.loadClass(fullClassName);
+            Class<?> clazz = myClassLoader.loadClass(fullClassName);
 //        myClassLoader.close(); // this method releases resources. But it cant be used if a target class hase dependencies on other classes.
 //        Class clazz = Class.forName(fullClassName, true, myClassLoader); // This is an alternative variant to load a class (it can replace the previous line).
         log.info("Class {} is loaded", clazz.getName());
